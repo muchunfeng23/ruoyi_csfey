@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.StudentMapper">
+    
+    <resultMap type="com.ruoyi.system.domain.Student" id="StudentResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="fatherName"    column="fatherName"    />
+        <result property="motherName"    column="motherName"    />
+        <result property="phone"    column="phone"    />
+        <result property="carBrand"    column="carBrand"    />
+        <result property="classroom"    column="classroom"    />
+        <result property="createAt"    column="createAt"    />
+    </resultMap>
+
+    <sql id="selectStudentVo">
+        select id, `name`, fatherName, motherName, phone, carBrand, classroom, createAt from student
+    </sql>
+
+    <select id="selectStudentList" parameterType="com.ruoyi.system.domain.Student" resultMap="StudentResult">
+        <include refid="selectStudentVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="fatherName != null  and fatherName != ''"> and fatherName like concat('%', #{fatherName}, '%')</if>
+            <if test="motherName != null  and motherName != ''"> and motherName like concat('%', #{motherName}, '%')</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="carBrand != null  and carBrand != ''"> and carBrand like concat('%', #{carBrand}, '%')</if>
+            <if test="classroom != null  and classroom != ''"> and classroom = #{classroom}</if>
+            <if test="createAt != null "> and createAt = #{createAt}</if>
+        </where>
+    </select>
+    
+    <select id="selectStudentById" parameterType="Long" resultMap="StudentResult">
+        <include refid="selectStudentVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertStudent" parameterType="Student" useGeneratedKeys="true" keyProperty="id">
+        insert into student
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="fatherName != null">fatherName,</if>
+            <if test="motherName != null">motherName,</if>
+            <if test="phone != null">phone,</if>
+            <if test="carBrand != null">carBrand,</if>
+            <if test="classroom != null">classroom,</if>
+            <if test="createAt != null">createAt,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="fatherName != null">#{fatherName},</if>
+            <if test="motherName != null">#{motherName},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="carBrand != null">#{carBrand},</if>
+            <if test="classroom != null">#{classroom},</if>
+            <if test="createAt != null">#{createAt},</if>
+         </trim>
+    </insert>
+
+    <update id="updateStudent" parameterType="Student">
+        update student
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="fatherName != null">fatherName = #{fatherName},</if>
+            <if test="motherName != null">motherName = #{motherName},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="carBrand != null">carBrand = #{carBrand},</if>
+            <if test="classroom != null">classroom = #{classroom},</if>
+            <if test="createAt != null">createAt = #{createAt},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteStudentById" parameterType="Long">
+        delete from student where id = #{id}
+    </delete>
+
+    <delete id="deleteStudentByIds" parameterType="String">
+        delete from student where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
