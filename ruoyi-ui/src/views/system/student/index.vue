@@ -9,22 +9,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="父亲姓名" prop="fatherName">
-        <el-input
-          v-model="queryParams.fatherName"
-          placeholder="请输入父亲姓名"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="母亲姓名" prop="motherName">
-        <el-input
-          v-model="queryParams.motherName"
-          placeholder="请输入母亲姓名"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item label="电话" prop="phone">
         <el-input
           v-model="queryParams.phone"
@@ -45,14 +29,6 @@
         <el-input
           v-model="queryParams.classroom"
           placeholder="请输入班级"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="创建时间" prop="createAt">
-        <el-input
-          v-model="queryParams.createAt"
-          placeholder="请输入创建时间"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -138,7 +114,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -167,9 +143,6 @@
         </el-form-item>
         <el-form-item label="班级" prop="classroom">
           <el-input v-model="form.classroom" placeholder="请输入班级" />
-        </el-form-item>
-        <el-form-item label="创建时间" prop="createAt">
-          <el-input v-model="form.createAt" placeholder="请输入创建时间" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
